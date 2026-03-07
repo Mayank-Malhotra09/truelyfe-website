@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueLyfe — Ultra-Filtered Whole Cow Milk | 2X Protein | Delhi NCR</title>
+    <meta name="description"
+        content="TrueLyfe is ultra-filtered whole cow milk with 2X the protein of regular milk. Sterilized, pure, and delivered to your door in Delhi NCR. No powders. No compromises.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="index.css?v=7">
+    <link rel="icon" href="assets/TrueLyfe Logo without BG.png" type="image/png">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 1. FIXED NAVIGATION BAR                     -->
+    <!-- ═══════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="assets/TrueLyfe Logo without BG.png" alt="TrueLyfe Logo" class="nav-logo-img">
+            </a>
+            <a href="#hero" class="nav-cta btn btn-teal btn-pill" id="nav-cta-btn">Get Early Access</a>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 2. HERO SECTION                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content animate-on-scroll">
+                <!-- SKU Toggle -->
+                <div class="sku-toggle">
+                    <button class="sku-btn active" data-variant="regular" id="sku-regular">Regular</button>
+                    <button class="sku-btn" data-variant="lactose-free" id="sku-lactose">Lactose-Free</button>
+                </div>
+
+                <span class="hero-badge">🚀 Now launching in Delhi NCR</span>
+                <h1 class="hero-headline" id="hero-headline">Milk That Works As Hard As You Do.</h1>
+                <p class="hero-subheadline" id="hero-subheadline">TrueLyfe is ultra-filtered whole cow milk with 2x the
+                    protein of regular milk — sterilized, pure, and delivered to your door. No powders. No compromises.
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-block">
+                        <span class="stat-value">2X</span>
+                        <span class="stat-label">More Protein</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-value">6.6g</span>
+                        <span class="stat-label">Per 100ml</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-value">0</span>
+                        <span class="stat-label">Added Powders</span>
+                    </div>
+                </div>
+
+                <!-- Waitlist Counter -->
+                <div class="waitlist-counter" id="waitlist-counter">
+                    🔥 <span id="counter-number">0</span> people from Delhi NCR have already joined
+                </div>
+
+                <form class="waitlist-form hero-form" id="hero-email-form">
+                    <div class="form-fields">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Full Name" required class="form-input"
+                                id="hero-name-input">
+                            <input type="email" name="email" placeholder="Email Address" required class="form-input"
+                                id="hero-email-input">
+                        </div>
+                        <div class="form-row">
+                            <input type="tel" name="phone" placeholder="Phone Number" required class="form-input"
+                                id="hero-phone-input">
+                            <select name="age" required class="form-input form-select" id="hero-age-input">
+                                <option value="" disabled selected>Age Bracket</option>
+                                <option value="18-24">18–24</option>
+                                <option value="25-34">25–34</option>
+                                <option value="35-44">35–44</option>
+                                <option value="45-54">45–54</option>
+                                <option value="55+">55+</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-teal btn-full" id="hero-submit-btn">Notify Me First
+                            →</button>
+                    </div>
+                    <p class="email-note">Delhi NCR Early Access · Free · No spam</p>
+                    <div class="form-success" id="hero-success">
+                        <span class="success-icon">✅</span> You're on the list! We'll notify you when TrueLyfe launches.
+                    </div>
+                </form>
+            </div>
+
+            <div class="hero-visual animate-on-scroll">
+                <div class="bottle-wrapper" id="bottle-wrapper">
+                    <img src="assets/Normal Milk Variant 1.png" alt="TrueLyfe Regular Whole Cow Milk Bottle"
+                        class="bottle-img active" id="bottle-teal">
+                    <img src="assets/Lactose Free Milk Variant 2.png" alt="TrueLyfe Lactose-Free Whole Cow Milk Bottle"
+                        class="bottle-img" id="bottle-purple">
+                </div>
+                <div class="floating-badges" id="floating-badges">
+                    <span class="floating-badge badge-1" id="float-badge-1">💪 2X Protein</span>
+                    <span class="floating-badge badge-2" id="float-badge-2">🦴 High Calcium</span>
+                    <span class="floating-badge badge-3" id="float-badge-3">✅ Zero Powders</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 3. MILK POUR VIDEO SECTION                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="milk-pour" id="milk-pour">
+        <div class="milk-pour-overlay">
+            <video class="milk-pour-video" autoplay muted loop playsinline id="milk-pour-video">
+                <source src="assets/milk-pour.mp4" type="video/mp4">
+            </video>
+            <div class="milk-pour-fallback"></div>
+        </div>
+        <div class="milk-pour-text animate-on-scroll">
+            <h2>Pure. Natural. Powerful.</h2>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 4. TWO PRODUCT VARIANT CARDS                -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="products" id="products">
+        <div class="section-container">
+            <h2 class="section-heading animate-on-scroll">Two Variants. One Standard of Purity.</h2>
+            <div class="product-cards">
+                <!-- Regular Card -->
+                <div class="product-card card-teal animate-on-scroll" id="card-regular">
+                    <span class="product-badge badge-teal">Regular</span>
+                    <h3 class="product-name">Whole Cow Milk</h3>
+                    <p class="product-subtitle">Ultra-Filtered · Sterilized</p>
+                    <p class="product-price">₹130 <span class="price-unit">/ litre</span></p>
+                    <ul class="product-features">
+                        <li><span class="check check-teal">✓</span> 6.6g Protein per 100ml</li>
+                        <li><span class="check check-teal">✓</span> High in Calcium</li>
+                        <li><span class="check check-teal">✓</span> 3.5% Natural Fat</li>
+                        <li><span class="check check-teal">✓</span> Zero Added Powders</li>
+                        <li><span class="check check-teal">✓</span> Sterilized · No Preservatives</li>
+                        <li><span class="check check-teal">✓</span> 90-Day Shelf Life</li>
+                    </ul>
+                    <a href="#hero" class="btn btn-teal btn-full scroll-to-form">Get Early Access</a>
+                </div>
+
+                <!-- Lactose-Free Card -->
+                <div class="product-card card-purple animate-on-scroll" id="card-lactose">
+                    <span class="product-badge badge-purple">Lactose-Free</span>
+                    <h3 class="product-name">Lactose-Free Cow Milk</h3>
+                    <p class="product-subtitle">Ultra-Filtered · Sterilized</p>
+                    <p class="product-price">₹140–150 <span class="price-unit">/ litre</span></p>
+                    <ul class="product-features">
+                        <li><span class="check check-purple">✓</span> 6.6g Protein per 100ml</li>
+                        <li><span class="check check-purple">✓</span> High in Calcium</li>
+                        <li><span class="check check-purple">✓</span> 3.5% Natural Fat</li>
+                        <li><span class="check check-purple">✓</span> Zero Added Powders</li>
+                        <li><span class="check check-purple">✓</span> Lactose broken down naturally</li>
+                        <li><span class="check check-purple">✓</span> Gentle on sensitive stomachs</li>
+                    </ul>
+                    <a href="#hero" class="btn btn-purple btn-full scroll-to-form">Get Early Access</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 5. HOW IT'S MADE                            -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="how-made" id="how-made">
+        <div class="section-container">
+            <h2 class="section-heading light animate-on-scroll">How TrueLyfe Is Made</h2>
+            <div class="process-cards">
+                <div class="process-card animate-on-scroll" style="--delay: 0">
+                    <span class="process-number">01</span>
+                    <span class="process-icon">🐄</span>
+                    <h3 class="process-title">Sourced Fresh</h3>
+                    <p class="process-desc">Fresh whole cow milk from quality-verified farms. Nothing artificial added.
+                    </p>
+                </div>
+                <div class="process-card animate-on-scroll" style="--delay: 1">
+                    <span class="process-number">01</span>
+                    <span class="process-icon">🔬</span>
+                    <h3 class="process-title">Ultra-Filtered</h3>
+                    <p class="process-desc">Filtration membranes concentrate natural protein and calcium while keeping
+                        fat intact.</p>
+                </div>
+                <div class="process-card animate-on-scroll" style="--delay: 2">
+                    <span class="process-number">03</span>
+                    <span class="process-icon">🌡️</span>
+                    <h3 class="process-title">Batch Retort Sterilized</h3>
+                    <p class="process-desc">Sealed bottles sterilized at high temperature. Zero preservatives needed.
+                    </p>
+                </div>
+                <div class="process-card animate-on-scroll" style="--delay: 3">
+                    <span class="process-number">04</span>
+                    <span class="process-icon">📦</span>
+                    <h3 class="process-title">Delivered to You</h3>
+                    <p class="process-desc">No cold chain needed. Safe for 90 days unopened. Refrigerate after opening.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 6. COMPARISON TABLE                         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="comparison" id="comparison">
+        <div class="section-container">
+            <h2 class="section-heading animate-on-scroll">TrueLyfe vs Regular Milk</h2>
+            <div class="table-wrapper animate-on-scroll">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th class="feature-col">Feature</th>
+                            <th class="truelyfe-col">TrueLyfe</th>
+                            <th class="regular-col">Regular Packaged Milk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Protein per 100ml</td>
+                            <td class="highlight-teal">6.6g — 2X Higher ✅</td>
+                            <td class="dim">~3.2g ⚠️</td>
+                        </tr>
+                        <tr>
+                            <td>Calcium</td>
+                            <td class="highlight-teal">Higher than regular ✅</td>
+                            <td class="dim">Standard ⚠️</td>
+                        </tr>
+                        <tr>
+                            <td>Added Protein Powder</td>
+                            <td class="highlight-teal">Zero ✅</td>
+                            <td>Zero ✅</td>
+                        </tr>
+                        <tr>
+                            <td>Preservatives</td>
+                            <td class="highlight-teal">None ✅</td>
+                            <td class="dim">Varies by brand ⚠️</td>
+                        </tr>
+                        <tr>
+                            <td>Needs Refrigeration</td>
+                            <td class="highlight-teal">Only after opening ✅</td>
+                            <td class="dim-bad">Always ❌</td>
+                        </tr>
+                        <tr>
+                            <td>Shelf Life</td>
+                            <td class="highlight-teal">90 Days ✅</td>
+                            <td class="dim-bad">3–7 Days ❌</td>
+                        </tr>
+                        <tr>
+                            <td>Cold Chain Risk</td>
+                            <td class="highlight-teal">None ✅</td>
+                            <td class="dim-bad">High ❌</td>
+                        </tr>
+                        <tr>
+                            <td>Lactose-Free Option</td>
+                            <td class="highlight-teal">Available ✅</td>
+                            <td class="dim-bad">Rarely ❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 7. SCROLLING TESTIMONIAL TICKER             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="ticker-section" id="testimonials">
+        <div class="ticker-track" id="ticker-track">
+            <div class="ticker-content">
+                <span class="ticker-item">"Finally, milk that actually has protein!" — Priya, Gurgaon</span>
+                <span class="ticker-item">"My chai has never tasted this good." — Arjun, Noida</span>
+                <span class="ticker-item">"No more bloating with the lactose-free version!" — Sneha, Delhi</span>
+                <span class="ticker-item">"90-day shelf life is a game changer." — Rohan, Faridabad</span>
+                <span class="ticker-item">"Clean label, real protein. This is what India needed." — Kavya, Dwarka</span>
+                <span class="ticker-item">"Tastes richer and creamier than any packet milk." — Vikram, South
+                    Delhi</span>
+            </div>
+            <div class="ticker-content" aria-hidden="true">
+                <span class="ticker-item">"Finally, milk that actually has protein!" — Priya, Gurgaon</span>
+                <span class="ticker-item">"My chai has never tasted this good." — Arjun, Noida</span>
+                <span class="ticker-item">"No more bloating with the lactose-free version!" — Sneha, Delhi</span>
+                <span class="ticker-item">"90-day shelf life is a game changer." — Rohan, Faridabad</span>
+                <span class="ticker-item">"Clean label, real protein. This is what India needed." — Kavya, Dwarka</span>
+                <span class="ticker-item">"Tastes richer and creamier than any packet milk." — Vikram, South
+                    Delhi</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 8. FAQ SECTION                              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="faq" id="faq">
+        <div class="section-container">
+            <h2 class="section-heading animate-on-scroll">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Is TrueLyfe natural or processed?</h3>
+                    <p class="faq-answer">TrueLyfe is made from real whole cow milk. Ultra-filtration and retort
+                        sterilization are physical processes — no chemicals, no additives, no powders.</p>
+                </div>
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Why does it have 2X more protein?</h3>
+                    <p class="faq-answer">Ultra-filtration concentrates natural protein from real cow milk. No protein
+                        powder is added at any stage.</p>
+                </div>
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Does 90-day shelf life mean chemicals are added?</h3>
+                    <p class="faq-answer">No. Shelf life comes from batch retort sterilization — the same technology
+                        used for baby food globally. Zero preservatives.</p>
+                </div>
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Will it taste different from regular milk?</h3>
+                    <p class="faq-answer">Slightly richer and creamier due to higher protein. Works perfectly in chai,
+                        smoothies, and cooking.</p>
+                </div>
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Who is the Lactose-Free variant for?</h3>
+                    <p class="faq-answer">Anyone who experiences bloating after regular milk. Lactose is broken down
+                        naturally using lactase enzyme.</p>
+                </div>
+                <div class="faq-card animate-on-scroll">
+                    <h3 class="faq-question">Where do you deliver?</h3>
+                    <p class="faq-answer">Launching in Delhi NCR first. Sign up to be notified when we're live in your
+                        area.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 9. FINAL EMAIL CAPTURE                      -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="final-cta" id="final-cta">
+        <div class="section-container">
+            <div class="final-cta-content animate-on-scroll">
+                <h2 class="final-heading">Be First in Delhi NCR. Get Early Access.</h2>
+                <p class="final-subtext">Join the waitlist. We'll notify you the moment TrueLyfe is ready to deliver to
+                    your door.</p>
+                <form class="waitlist-form final-form" id="final-email-form">
+                    <div class="form-fields">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Full Name" required class="form-input"
+                                id="final-name-input">
+                            <input type="email" name="email" placeholder="Email Address" required class="form-input"
+                                id="final-email-input">
+                        </div>
+                        <div class="form-row">
+                            <input type="tel" name="phone" placeholder="Phone Number" required class="form-input"
+                                id="final-phone-input">
+                            <select name="age" required class="form-input form-select" id="final-age-input">
+                                <option value="" disabled selected>Age Bracket</option>
+                                <option value="18-24">18–24</option>
+                                <option value="25-34">25–34</option>
+                                <option value="35-44">35–44</option>
+                                <option value="45-54">45–54</option>
+                                <option value="55+">55+</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-green btn-full" id="final-submit-btn">Join Waitlist
+                            →</button>
+                    </div>
+                    <p class="email-note light">No spam. No payment required. Just pure milk, coming soon.</p>
+                    <div class="form-success" id="final-success">
+                        <span class="success-icon">✅</span> You're on the list! We'll notify you when TrueLyfe launches.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- 10. FOOTER                                  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <footer class="footer" id="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="assets/TrueLyfe Logo without BG.png" alt="TrueLyfe" class="footer-logo">
+                <p class="footer-tagline">TrueLyfe · Real Milk. Real Protein.</p>
+            </div>
+            <p class="footer-copy">© 2026 TrueLyfe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY CTA -->
+    <div class="mobile-sticky-cta" id="mobile-sticky-cta">
+        <a href="#hero" class="btn btn-teal btn-full scroll-to-form">Join Waitlist →</a>
+    </div>
+
+    <script src="index.js?v=4"></script>
+</body>
+
+</html>
