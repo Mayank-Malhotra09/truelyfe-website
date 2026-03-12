@@ -824,7 +824,55 @@ ul {
 }
 
 /* ═══════════════════════════════════════════
-   5. HOW IT'S MADE
+   5. DAILY USE CASES
+   ═══════════════════════════════════════════ */
+.use-cases {
+  background: linear-gradient(135deg, #F9FAFB 0%, #F0F4F4 100%);
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.use-case-card {
+  background: var(--bg-white);
+  padding: 32px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: all var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.use-case-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(26, 158, 158, 0.08);
+  border-color: rgba(26, 158, 158, 0.2);
+}
+
+.uc-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.uc-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.uc-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════
+   6. HOW IT'S MADE
    ═══════════════════════════════════════════ */
 .how-made {
   background: var(--bg-dark);
@@ -1295,6 +1343,7 @@ ul {
 
   .hero-container {
     gap: 40px;
+    padding: 0 40px; /* Added from user's snippet */
   }
 
   .bottle-wrapper {
@@ -1412,6 +1461,10 @@ ul {
 
   .product-card {
     padding: 32px 24px;
+  }
+
+  .use-case-grid {
+    grid-template-columns: 1fr;
   }
 
   .process-timeline {
