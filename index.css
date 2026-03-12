@@ -844,48 +844,102 @@ ul {
     radial-gradient(ellipse at 80% 80%, rgba(123, 79, 166, 0.06) 0%, transparent 50%);
   pointer-events: none;
 }
-
-.process-cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+.process-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   position: relative;
   z-index: 1;
+  gap: 24px;
+  margin-top: 40px;
 }
 
-.process-card {
-  background: var(--bg-dark-card);
-  border-radius: var(--radius-md);
-  padding: 36px 28px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* Connecting dashed line */
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: repeating-linear-gradient(to right, rgba(26, 158, 158, 0.3) 0, rgba(26, 158, 158, 0.3) 8px, transparent 8px, transparent 16px);
+  z-index: -1;
+}
+
+.process-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.step-marker {
+  width: 80px;
+  height: 80px;
+  background: var(--bg-dark);
+  border: 1px solid rgba(26, 158, 158, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--teal);
+  margin-bottom: 24px;
+  box-shadow: 0 0 0 6px var(--bg-dark); /* creates gap on the dashed line */
   transition: all var(--transition);
   position: relative;
 }
 
-.process-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(26, 158, 158, 0.2);
+/* Glow effect underneath marker */
+.step-marker::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  background: radial-gradient(circle, rgba(26, 158, 158, 0.15), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.process-number {
-  font-size: 3rem;
-  font-weight: 900;
-  color: rgba(26, 158, 158, 0.15);
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  line-height: 1;
+.process-step:hover .step-marker {
+  background: var(--teal);
+  color: var(--bg-dark);
+  border-color: var(--teal);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 6px var(--bg-dark), 0 0 20px rgba(26, 158, 158, 0.4);
+}
+
+.process-step:hover .step-marker::after {
+  opacity: 1;
+}
+
+.step-content {
+  background: var(--bg-dark-card);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all var(--transition);
+  width: 100%;
+}
+
+.process-step:hover .step-content {
+  transform: translateY(-4px);
+  border-color: rgba(26, 158, 158, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 .process-icon {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  display: block;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  display: inline-block;
 }
 
 .process-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-white);
   margin-bottom: 10px;
@@ -1360,8 +1414,36 @@ ul {
     padding: 32px 24px;
   }
 
-  .process-cards {
-    grid-template-columns: 1fr;
+  .process-timeline {
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 32px;
+  }
+
+  .process-timeline::before {
+    top: 0;
+    bottom: 0;
+    left: 40px; /* center of 80px marker */
+    right: auto;
+    width: 2px;
+    height: 100%;
+    background: repeating-linear-gradient(to bottom, rgba(26, 158, 158, 0.3) 0, rgba(26, 158, 158, 0.3) 8px, transparent 8px, transparent 16px);
+  }
+
+  .process-step {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 24px;
+  }
+
+  .step-marker {
+    min-width: 80px;
+    margin-bottom: 0;
+  }
+
+  .step-content {
+    padding: 24px 20px;
   }
 
   .faq-grid {
