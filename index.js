@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     'lactose-free': {
       headline: 'Great Taste. Zero Discomfort.',
-      subheadline: 'TrueLyfe Lactose-Free is ultra-filtered whole cow milk with 2x the protein — with lactose broken down naturally. All the protein, none of the bloating.',
+      subheadline: 'Lactose is a natural sugar in milk that nearly 70% of people struggle to digest — causing gas, bloating, and discomfort. TrueLyfe Lactose-Free breaks down lactose naturally, so you get real whole cow milk with 2x protein, without any of the digestive trouble.',
       btnClass: 'btn-purple'
     }
   };
