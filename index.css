@@ -915,6 +915,12 @@ ul {
 }
 
 .visual-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vc-row {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   gap: 16px 24px;
@@ -1397,70 +1403,74 @@ ul {
     font-size: 1.2rem;
   }
 
-  /* Mobile comparison table — stacked card layout */
-  .comparison-table {
-    min-width: 0;
+  /* Mobile comparison — stacked card layout */
+  .visual-comparison-wrapper {
+    padding: 24px 16px;
   }
 
-  .comparison-table thead {
+  .visual-comparison {
+    gap: 20px;
+  }
+
+  .vc-row {
+    flex-direction: column;
+    display: flex;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+
+  .vc-row.vc-header-row {
     display: none;
   }
 
-  .comparison-table tbody tr {
-    display: flex;
-    flex-direction: column;
-    padding: 16px 20px;
+  .vc-cell.vc-center {
+    order: 1;
+    background: var(--bg-light);
     border-bottom: 1px solid var(--border);
-    gap: 8px;
+    padding: 12px;
+    width: 100%;
   }
 
-  .comparison-table tbody tr:last-child {
-    border-bottom: none;
-  }
-
-  .comparison-table td {
-    display: flex;
-    align-items: center;
-    padding: 4px 0;
-    border-bottom: none;
-    font-size: 0.88rem;
-  }
-
-  .comparison-table td.feature-col,
-  .comparison-table td:first-child {
-    font-weight: 700;
-    font-size: 0.92rem;
+  .vc-feature-badge {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 0.95rem;
     color: var(--text-primary);
-    width: 100%;
   }
 
-  .comparison-table td.highlight-teal,
-  .comparison-table td:nth-child(2) {
-    width: 100%;
+  .vc-cell.vc-left {
+    order: 2;
+    justify-content: space-between;
+    text-align: right;
     background: rgba(26, 158, 158, 0.06);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-  }
-
-  .comparison-table td.highlight-teal::before {
-    content: 'TrueLyfe: ';
-    font-weight: 600;
-    color: var(--teal);
-    margin-right: 4px;
-  }
-
-  .comparison-table td:nth-child(3) {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
     width: 100%;
-    padding: 8px 12px;
+  }
+  
+  .vc-cell.vc-left::before {
+    content: 'TrueLyfe: ';
+    color: var(--teal);
+    font-weight: 700;
   }
 
-  .comparison-table td.dim::before,
-  .comparison-table td.dim-bad::before,
-  .comparison-table td.regular-col::before {
+  .vc-cell.vc-right {
+    order: 3;
+    justify-content: space-between;
+    text-align: right;
+    padding: 16px;
+    background: var(--bg-white);
+    width: 100%;
+  }
+
+  .vc-cell.vc-right::before {
     content: 'Regular: ';
-    font-weight: 600;
     color: var(--text-muted);
-    margin-right: 4px;
+    font-weight: 700;
   }
 }
 
