@@ -91,16 +91,63 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // ─── 4. Waitlist Counter Animation ───
+  // ─── Google Sheet URL (used by counter + form submission) ───
+  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyWzCNTS9pjnhbYHq7idoCEZk_h4ByoOn81wcRF9cZp0r9qR--W2d3R6-B6moTuwqOo/exec';
+
+  // ─── 4. Waitlist Counter Animation (Dynamic from Google Sheets) ───
   const counterEl = document.getElementById('counter-number');
-  const targetCount = 143;
+  let currentCount = 0; // Will be fetched from the sheet
   let counted = false;
 
+  // Animate counter from `from` to `to` over `duration` ms
+  function animateCounter(el, from, to, duration) {
+    const start = performance.now();
+    const diff = to - from;
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(from + eased * diff);
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = to;
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // Fetch live count from Google Sheets on page load
+  async function fetchWaitlistCount() {
+    try {
+      const response = await fetch(GOOGLE_SHEET_URL);
+      const data = await response.json();
+      if (data.status === 'success' && typeof data.count === 'number') {
+        currentCount = data.count;
+      } else {
+        currentCount = 143; // fallback
+      }
+    } catch (err) {
+      console.warn('Could not fetch waitlist count, using fallback:', err);
+      currentCount = 143; // fallback
+    }
+
+    // If counter is already in view, animate immediately
+    if (counted) {
+      counterEl.textContent = currentCount;
+    }
+  }
+
+  // Observe the counter element — animate when it scrolls into view
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !counted) {
         counted = true;
-        animateCounter(counterEl, targetCount, 1500);
+        animateCounter(counterEl, 0, currentCount, 1500);
         counterObserver.unobserve(entry.target);
       }
     });
@@ -108,30 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   counterObserver.observe(document.getElementById('waitlist-counter'));
 
-  function animateCounter(el, target, duration) {
-    const start = performance.now();
-
-    function tick(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target);
-
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        el.textContent = target;
-      }
-    }
-
-    requestAnimationFrame(tick);
+  // Increment counter after successful submission (called from form handler)
+  function incrementCounter() {
+    const oldCount = currentCount;
+    currentCount += 1;
+    animateCounter(counterEl, oldCount, currentCount, 600);
   }
+
+  // Kick off the fetch
+  fetchWaitlistCount();
 
 
   // ─── 5. Waitlist Form Handling (Google Sheets Integration) ───
-  // ⚠️ REPLACE THIS URL with your deployed Google Apps Script web app URL
-  const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyWzCNTS9pjnhbYHq7idoCEZk_h4ByoOn81wcRF9cZp0r9qR--W2d3R6-B6moTuwqOo/exec';
 
   const heroForm = document.getElementById('hero-email-form');
   const heroSuccess = document.getElementById('hero-success');
@@ -187,6 +222,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           showSuccessOnOther(heroForm, heroSuccess);
         }
+
+        // Increment the waitlist counter
+        incrementCounter();
       } catch (err) {
         console.error('Submission error:', err);
         // Still show success (data may have been saved via no-cors)

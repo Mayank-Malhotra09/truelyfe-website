@@ -45,8 +45,11 @@ function doPost(e) {
             data.age || ''       // Age Bracket
         ]);
 
+        // Return the updated count after adding the new row
+        var count = Math.max(0, sheet.getLastRow() - 1); // minus header row
+
         return ContentService
-            .createTextOutput(JSON.stringify({ status: 'success' }))
+            .createTextOutput(JSON.stringify({ status: 'success', count: count }))
             .setMimeType(ContentService.MimeType.JSON);
 
     } catch (error) {
@@ -56,9 +59,22 @@ function doPost(e) {
     }
 }
 
-// Optional: Test function to verify the script works
+/**
+ * GET endpoint — returns the current waitlist signup count.
+ * Called by the frontend on page load to show a live counter.
+ * URL: your-deployment-url?action=count
+ */
 function doGet(e) {
-    return ContentService
-        .createTextOutput('TrueLyfe Waitlist API is running!')
-        .setMimeType(ContentService.MimeType.TEXT);
+    try {
+        var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+        var count = Math.max(0, sheet.getLastRow() - 1); // minus header row
+
+        return ContentService
+            .createTextOutput(JSON.stringify({ status: 'success', count: count }))
+            .setMimeType(ContentService.MimeType.JSON);
+    } catch (error) {
+        return ContentService
+            .createTextOutput(JSON.stringify({ status: 'error', count: 0, message: error.toString() }))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
 }
