@@ -96,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── 4. Waitlist Counter Animation (Dynamic from Google Sheets) ───
   const counterEl = document.getElementById('counter-number');
-  let currentCount = 0; // Will be fetched from the sheet
+  const BASE_COUNT = 100; // Base offset — displayed count = BASE_COUNT + actual signups
+  let currentCount = BASE_COUNT; // Start with base, updated after fetch
   let counted = false;
 
   // Animate counter from `from` to `to` over `duration` ms
@@ -127,13 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const response = await fetch(GOOGLE_SHEET_URL);
       const data = await response.json();
       if (data.status === 'success' && typeof data.count === 'number') {
-        currentCount = data.count;
+        currentCount = BASE_COUNT + data.count;
       } else {
-        currentCount = 143; // fallback
+        currentCount = BASE_COUNT; // fallback to base only
       }
     } catch (err) {
       console.warn('Could not fetch waitlist count, using fallback:', err);
-      currentCount = 143; // fallback
+      currentCount = BASE_COUNT; // fallback to base only
     }
 
     // If counter is already in view, animate immediately
