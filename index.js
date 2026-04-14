@@ -226,6 +226,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Increment the waitlist counter
         incrementCounter();
+
+        // Fire Meta Pixel Lead event for conversion tracking
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead', {
+            content_name: 'Waitlist Signup',
+            content_category: 'Early Access'
+          });
+        }
       } catch (err) {
         console.error('Submission error:', err);
         // Still show success (data may have been saved via no-cors)
