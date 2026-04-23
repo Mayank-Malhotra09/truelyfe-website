@@ -17,7 +17,7 @@
 
 const FROM_EMAIL = 'mayank@truelyfe.in';
 const FROM_NAME = 'Mayank from TrueLyfe';
-const SURVEY_URL = 'https://truelyfe.in/survey.html'; // Ensure this URL matches where you host the survey
+const SURVEY_URL = 'https://truelyfe.in/survey'; // Cloudflare Pages strips .html extension
 
 function doPost(e) {
     try {
@@ -99,7 +99,7 @@ function doGet(e) {
  * Sends a premium HTML email using the Gmail alias
  */
 function sendSurveyEmail(name, emailAddress) {
-    var subject = "You're on the list! Help us build the perfect milk for you 🥛";
+    var subject = "You're on the list! Help us build the perfect milk for you";
     
     // We add the user's email to the query string so the survey page can pre-fill it!
     var personalizedSurveyUrl = SURVEY_URL + "?email=" + encodeURIComponent(emailAddress) + "&name=" + encodeURIComponent(name);
@@ -184,4 +184,25 @@ function sendBulkSurveyEmails() {
     }
     
     Logger.log("Successfully sent " + emailsSent + " survey emails.");
+}
+
+/**
+ * TEST FUNCTION — Run this ONCE from the Apps Script editor to:
+ * 1. Trigger Gmail authorization (you'll see a permission popup)
+ * 2. Send a test email to yourself to verify everything works
+ * 
+ * Select this function from the dropdown above and click ▶️ Run
+ */
+function testEmailSetup() {
+    var testEmail = 'mkmalhotra65@gmail.com'; // Your email for testing
+    var testName = 'Mayank';
+    
+    Logger.log("Starting email test...");
+    Logger.log("Sending from: " + FROM_EMAIL);
+    Logger.log("Sending to: " + testEmail);
+    Logger.log("Survey URL: " + SURVEY_URL);
+    
+    sendSurveyEmail(testName, testEmail);
+    
+    Logger.log("✅ Test email sent successfully! Check your inbox.");
 }
