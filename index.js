@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, phone, age })
+            body: JSON.stringify({ action: 'signup', name, email, phone, age })
           });
         }
 
