@@ -40,9 +40,16 @@
         <!-- ═══ Survey Form ═══ -->
         <form id="survey-form" novalidate>
 
-            <!-- Hidden fields (pre-filled from URL params) -->
-            <input type="hidden" name="name" id="survey-name">
-            <input type="hidden" name="email" id="survey-email">
+            <!-- ─── About You ─── -->
+            <div class="question-card" id="info-card">
+                <span class="question-number">👤</span>
+                <p class="question-label">First, tell us a bit about you</p>
+                <p class="question-hint">So we can match your feedback to your waitlist signup</p>
+                <div class="survey-info-row">
+                    <input type="text" class="survey-input" name="name" id="survey-name" placeholder="Your Name" required>
+                    <input type="email" class="survey-input" name="email" id="survey-email" placeholder="Email Address" required>
+                </div>
+            </div>
 
             <!-- ─── Q1: Current Milk ─── -->
             <div class="question-card" id="q1-card">

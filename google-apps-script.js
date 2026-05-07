@@ -71,6 +71,9 @@ function doPost(e) {
                 data.q12 || ''
             ]);
 
+            // ─── Mark survey completion in the Waitlist sheet ───
+            markSurveyCompleted(spreadsheet, data.email || '');
+
             return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
                 .setMimeType(ContentService.MimeType.JSON);
         }
@@ -92,6 +95,43 @@ function doGet(e) {
     } catch (error) {
         return ContentService.createTextOutput(JSON.stringify({ status: 'error', count: 0, message: error.toString() }))
             .setMimeType(ContentService.MimeType.JSON);
+    }
+}
+
+/**
+ * Finds the user's email in the Waitlist sheet and marks column F
+ * with "Yes" and column G with the survey completion timestamp.
+ * 
+ * Waitlist headers should be:
+ * A: Timestamp | B: Name | C: Email | D: Phone | E: Age Bracket | F: Survey Completed | G: Survey Date
+ */
+function markSurveyCompleted(spreadsheet, email) {
+    if (!email) return;
+
+    try {
+        var waitlistSheet = spreadsheet.getSheetByName("Waitlist") || spreadsheet.getSheets()[0];
+        var data = waitlistSheet.getDataRange().getValues();
+
+        // Ensure headers exist in columns F and G (row 1)
+        if (data.length > 0) {
+            var headerF = waitlistSheet.getRange(1, 6).getValue();
+            if (!headerF || headerF === '') {
+                waitlistSheet.getRange(1, 6).setValue('Survey Completed');
+                waitlistSheet.getRange(1, 7).setValue('Survey Date');
+            }
+        }
+
+        // Search for matching email (column C = index 2)
+        for (var i = 1; i < data.length; i++) {
+            if (data[i][2] && data[i][2].toString().toLowerCase().trim() === email.toLowerCase().trim()) {
+                waitlistSheet.getRange(i + 1, 6).setValue('Yes');           // Column F
+                waitlistSheet.getRange(i + 1, 7).setValue(new Date());      // Column G
+                Logger.log("Marked survey completed for: " + email);
+                break;
+            }
+        }
+    } catch (e) {
+        console.error("Error marking survey completion: " + e.message);
     }
 }
 
@@ -152,38 +192,52 @@ function sendSurveyEmail(name, emailAddress) {
 }
 
 /**
- * Utility function to send the survey email to ALL existing signups in the Waitlist tab.
- * You can run this manually from the Apps Script editor.
+ * Sends the survey email to signups who have NOT yet completed the survey.
+ * Skips anyone with "Yes" in Column F (Survey Completed).
+ * Run this manually from the Apps Script editor.
  */
 function sendBulkSurveyEmails() {
     var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     var waitlistSheet = spreadsheet.getSheetByName("Waitlist") || spreadsheet.getSheets()[0];
     
-    // Get all data
     var data = waitlistSheet.getDataRange().getValues();
     
-    // Assuming Row 1 is headers
-    // Index 1 = Name, Index 2 = Email
+    // Row 1 = headers
+    // Index 1 = Name, Index 2 = Email, Index 5 = Survey Completed (Column F)
     var emailsSent = 0;
+    var skipped = 0;
     
     for (var i = 1; i < data.length; i++) {
         var name = data[i][1];
         var email = data[i][2];
+        var surveyCompleted = (data[i][5] || '').toString().trim().toLowerCase();
+        
+        // Skip if already completed the survey
+        if (surveyCompleted === 'yes') {
+            skipped++;
+            Logger.log("Skipped (already completed): " + email);
+            continue;
+        }
         
         // Basic email validation
         if (email && email.indexOf('@') > 0) {
             try {
                 sendSurveyEmail(name, email);
                 emailsSent++;
-                // Small delay to prevent hitting rate limits too quickly
+                Logger.log("Sent to: " + email);
+                // Small delay to prevent hitting rate limits
                 Utilities.sleep(1000); 
             } catch (e) {
-                console.error("Failed sending bulk to " + email);
+                console.error("Failed sending to " + email + ": " + e.message);
             }
         }
     }
     
-    Logger.log("Successfully sent " + emailsSent + " survey emails.");
+    Logger.log("──────────────────────────");
+    Logger.log("✅ Bulk send complete!");
+    Logger.log("Emails sent: " + emailsSent);
+    Logger.log("Skipped (already completed survey): " + skipped);
+    Logger.log("──────────────────────────");
 }
 
 /**
@@ -205,4 +259,61 @@ function testEmailSetup() {
     sendSurveyEmail(testName, testEmail);
     
     Logger.log("✅ Test email sent successfully! Check your inbox.");
+}
+
+/**
+ * BACKFILL FUNCTION — Run this from the Apps Script editor to mark
+ * all people who have ALREADY filled the survey in the Waitlist sheet.
+ * 
+ * It reads the "Survey Responses" tab, collects all emails,
+ * then finds them in the "Waitlist" tab and marks columns F & G.
+ * 
+ * Select this function from the dropdown above and click ▶️ Run
+ */
+function backfillSurveyStatus() {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var waitlistSheet = spreadsheet.getSheetByName("Waitlist") || spreadsheet.getSheets()[0];
+    var surveySheet = spreadsheet.getSheetByName("Survey Responses");
+    
+    if (!surveySheet) {
+        Logger.log("No 'Survey Responses' sheet found. Nothing to backfill.");
+        return;
+    }
+    
+    // Ensure headers exist in columns F and G
+    var headerF = waitlistSheet.getRange(1, 6).getValue();
+    if (!headerF || headerF === '') {
+        waitlistSheet.getRange(1, 6).setValue('Survey Completed');
+        waitlistSheet.getRange(1, 7).setValue('Survey Date');
+    }
+    
+    // Collect all survey emails + their timestamps
+    var surveyData = surveySheet.getDataRange().getValues();
+    var surveyEmails = {}; // email -> timestamp
+    
+    for (var s = 1; s < surveyData.length; s++) {
+        var surveyEmail = (surveyData[s][2] || '').toString().toLowerCase().trim();
+        var surveyTimestamp = surveyData[s][0]; // Column A = Timestamp
+        if (surveyEmail) {
+            surveyEmails[surveyEmail] = surveyTimestamp;
+        }
+    }
+    
+    Logger.log("Found " + Object.keys(surveyEmails).length + " survey responses to match.");
+    
+    // Match against Waitlist
+    var waitlistData = waitlistSheet.getDataRange().getValues();
+    var marked = 0;
+    
+    for (var i = 1; i < waitlistData.length; i++) {
+        var waitlistEmail = (waitlistData[i][2] || '').toString().toLowerCase().trim();
+        
+        if (waitlistEmail && surveyEmails[waitlistEmail]) {
+            waitlistSheet.getRange(i + 1, 6).setValue('Yes');
+            waitlistSheet.getRange(i + 1, 7).setValue(surveyEmails[waitlistEmail]);
+            marked++;
+        }
+    }
+    
+    Logger.log("✅ Backfill complete! Marked " + marked + " people as survey completed in the Waitlist sheet.");
 }
